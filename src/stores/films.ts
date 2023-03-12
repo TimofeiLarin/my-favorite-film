@@ -34,9 +34,38 @@ export const useFilmsStore = defineStore("filmsStore", {
             "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler.",
           poster_path: "/b0PlSFdDwbyK0cf5RxwDpaOJQvQ.jpg",
           release_date: "2022-03-01",
-          isWatched: false,
+          isWatched: true,
+        },
+        {
+          id: 3,
+          original_title: "The Batman",
+          overview:
+            "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler.",
+          poster_path: "/b0PlSFdDwbyK0cf5RxwDpaOJQvQ.jpg",
+          release_date: "2022-03-01",
+          isWatched: true,
         },
       ],
       activeTab: 1,
     } as FilmsStore),
+  getters: {
+    watchedFilms(): FilmI[] {
+      return this.films.filter((film) => film.isWatched);
+    },
+  },
+  actions: {
+    setActiveTab(id: number) {
+      this.activeTab = id;
+    },
+    toggleWatched(id: number) {
+      const currentFilm = this.films.find((film) => film.id === id);
+
+      if (currentFilm) {
+        currentFilm.isWatched = !currentFilm.isWatched;
+      }
+    },
+    deleteFilm(id: number) {
+      this.films = this.films.filter((film) => film.id !== id);
+    },
+  },
 });

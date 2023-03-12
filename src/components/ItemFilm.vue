@@ -13,11 +13,19 @@
         {{ film.overview }}
       </span>
       <div class="film-buttons">
-        <button class="btn film-buttons-watched">
-          <span v-if="!film.isWatched">Watched</span>
+        <button
+          class="btn film-buttons-watched"
+          @click="filmStore.toggleWatched(film.id)"
+        >
+          <span v-if="film.isWatched">Watched</span>
           <span v-else>Unwatched</span>
         </button>
-        <button class="btn film-buttons-delete">Delete</button>
+        <button
+          class="btn film-buttons-delete"
+          @click="filmStore.deleteFilm(film.id)"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>
@@ -25,6 +33,9 @@
 
 <script setup lang="ts">
 import type { FilmI } from "../stores/films";
+import { useFilmsStore } from "../stores/films";
+
+const filmStore = useFilmsStore();
 
 const props = defineProps<{ film: FilmI }>();
 </script>
